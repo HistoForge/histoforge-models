@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "histoforge-models"
+version = "0.1.0"
+description = "HistoForge pathology model training and reference inference"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0 AND BSD-3-Clause"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "HistoForge contributors and upstream Cellpose contributors" }]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "numpy>=1.20.0", "scipy", "natsort", "tifffile", "tqdm", "torch>=2.6",
+    "torchvision", "opencv-python-headless", "fastremap", "imagecodecs", "roifile",
+    "fill-voids", "scikit-image", "scikit-learn>=1.0", "segment_anything",
+]
+
+[project.optional-dependencies]
+dinov3 = ["timm>=1.0.18", "safetensors"]
+training = ["wandb"]
+dev = ["pytest>=8", "build>=1.2", "tomli>=2; python_version<'3.11'"]
+gui = ["pyqtgraph>=0.12.4", "pyqt6", "pyqt6.sip", "qtpy", "superqt"]
+images = ["nd2", "pynrrd"]
+distributed = [
+    "dask", "distributed", "dask_image", "pyyaml", "zarr",
+    "dask_jobqueue", "bokeh", "pyarrow",
+]
+bioimageio = ["bioimageio.core"]
+all = [
+    "pyqtgraph>=0.12.4", "pyqt6", "pyqt6.sip", "qtpy", "superqt",
+    "nd2", "pynrrd", "dask", "distributed", "dask_image", "pyyaml",
+    "zarr", "dask_jobqueue", "bokeh", "pyarrow", "bioimageio.core",
+    "timm>=1.0.18", "safetensors", "wandb",
+]
+
+[project.urls]
+Repository = "https://github.com/HistoForge/histoforge-models"
+Documentation = "https://histoforge.github.io/docs/"
+
+[project.scripts]
+histoforge-models = "histoforge_models.__main__:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["histoforge_models", "histoforge_models.*"]
+
+[tool.setuptools.package-data]
+histoforge_models = ["logo/*.png", "logo/*.ico"]
+"histoforge_models.gui" = ["*.html"]
