@@ -1,0 +1,1 @@
+"""Optional inherited Cellpose GUI."""
