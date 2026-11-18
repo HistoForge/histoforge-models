@@ -1,0 +1,38 @@
+name: tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: ${{ matrix.platform.runner }} py${{ matrix.python.version }}
+    runs-on: ${{ matrix.platform.runner }}
+    strategy:
+      fail-fast: true
+      matrix:
+        platform:
+          - {runner: ubuntu-latest, tox: linux}
+          - {runner: windows-latest, tox: windows}
+          - {runner: macos-latest, tox: macos}
+        python:
+          - {version: "3.10", tox: py310}
+          - {version: "3.11", tox: py311}
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python.version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python.version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install tox
+      - name: Test with tox
+        run: tox -e ${{ matrix.python.tox }}-${{ matrix.platform.tox }}

@@ -1,0 +1,14 @@
+include histoforge_models/logo/logo.png
+include histoforge_models/logo/cellpose.ico
+recursive-include histoforge_models/gui *.html
+include README.md
+include LICENSE
+include NOTICE
+include CONTRIBUTING.md
+include environment.yml
+include conftest.py
+graft prod_docs
+graft scripts
+graft datasets/dataset_converters
+graft tests
+global-exclude *.py[cod]
